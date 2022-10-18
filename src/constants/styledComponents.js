@@ -48,3 +48,20 @@ export const StyledLink = styled(Link)`
   text-decoration: underline;
   font-size: 14px;
 `;
+
+export const StyledPlusBtn = styled.button`
+  width: 40px;
+  height: 35px;
+
+  background: #52b6ff;
+  border-radius: 5px;
+
+  border: none;
+
+  font-size: 27px;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

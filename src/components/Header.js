@@ -18,6 +18,7 @@ export default function Header() {
 }
 
 const StyledHeader = styled.header`
+  min-width: 100vw;
   max-width: 100vw;
   height: 70px;
 
@@ -25,8 +26,11 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
 
-  padding-left: 18px;
-  padding-right: 18px;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  padding: 0 18px;
 
   background: ${light.header.background};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
@@ -45,8 +49,8 @@ const StyledHeader = styled.header`
 `;
 
 const ImgContainer = styled.div`
-  width: 51px;
-  height: 51px;
+  width: 50px;
+  height: 50px;
 
   background: white;
   border-radius: 50%;

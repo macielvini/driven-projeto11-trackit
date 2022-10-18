@@ -1,5 +1,5 @@
 export const light = {
-  background: "#fff",
+  background: "#ffffff",
   header: { background: "#126ba5", text: "#fff" },
 
   text: {

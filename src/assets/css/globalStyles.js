@@ -362,9 +362,6 @@ h1{
 
 }
 
-body, input, button {
-  box-sizing: border-box;
-}
 
 a {
   text-decoration: none;
@@ -376,6 +373,18 @@ a:hover{
 
 *{
   margin: 0;
+  /* outline: 1px dashed red; */
+  box-sizing: border-box;
+}
+
+ul{
+  padding: 0;
+  margin: 0;
+}
+
+li{
+  list-style: none;
+  display: inline-block;
 }
 `;
 
