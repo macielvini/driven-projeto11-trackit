@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/images/logo.svg";
 import { light } from "../../constants/colors";
@@ -10,6 +11,12 @@ import {
 } from "../../constants/styledComponents";
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  function login() {
+    navigate("/habits");
+  }
+
   return (
     <>
       <Wrapper>
@@ -17,7 +24,7 @@ export default function Login() {
           <img src={logo} alt="" />
           <MainHeading>TrackIt</MainHeading>
         </LogoWrapper>
-        <Form>
+        <Form onSubmit={login}>
           <StyledInput type="text" placeholder="email" />
           <StyledInput type="password" placeholder="password" />
           <StyledSignButton type="submit">Entrar</StyledSignButton>

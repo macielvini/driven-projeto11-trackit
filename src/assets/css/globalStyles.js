@@ -369,6 +369,14 @@ body, input, button {
 a {
   text-decoration: none;
 }
+
+a:hover{
+  cursor: pointer;
+}
+
+*{
+  margin: 0;
+}
 `;
 
 export default GlobalStyle;
