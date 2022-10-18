@@ -2,14 +2,14 @@ import styled from "styled-components";
 import logo from "../../assets/images/logo.svg";
 import { light } from "../../constants/colors";
 import {
-  StyledInput,
-  StyledSignButton,
-  MainHeading,
   LogoWrapper,
+  MainHeading,
+  StyledInput,
   StyledLink,
+  StyledSignButton,
 } from "../../constants/styledComponents";
 
-export default function Login() {
+export default function Signup() {
   return (
     <>
       <Wrapper>
@@ -17,12 +17,16 @@ export default function Login() {
           <img src={logo} alt="" />
           <MainHeading>TrackIt</MainHeading>
         </LogoWrapper>
+
         <Form>
           <StyledInput type="text" placeholder="email" />
-          <StyledInput type="password" placeholder="password" />
-          <StyledSignButton type="submit">Entrar</StyledSignButton>
+          <StyledInput type="text" placeholder="senha" />
+          <StyledInput type="text" placeholder="nome" />
+          <StyledInput type="text" placeholder="url da foto" />
+
+          <StyledSignButton>Cadastrar</StyledSignButton>
         </Form>
-        <StyledLink to={"/signup"}>Não tem uma conta? Cadastre-se!</StyledLink>
+        <StyledLink to={"/"}>Já tem uma conta? Faça login!</StyledLink>
       </Wrapper>
     </>
   );

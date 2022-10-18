@@ -1,5 +1,20 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { text } from "./colors";
+import { light } from "./colors";
+
+export const MainHeading = styled.h1`
+  font-size: 70px;
+  font-weight: 400;
+  color: ${light.text.mainHeading};
+
+  margin: 0;
+`;
+
+export const LogoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const StyledInput = styled.input`
   width: 303px;
@@ -16,7 +31,7 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const StyledLoginButton = styled.button`
+export const StyledSignButton = styled.button`
   width: 303px;
   height: 45px;
 
@@ -26,4 +41,10 @@ export const StyledLoginButton = styled.button`
   color: #fff;
 
   border: none;
+`;
+
+export const StyledLink = styled(Link)`
+  color: ${light.link};
+  text-decoration: underline;
+  font-size: 14px;
 `;
