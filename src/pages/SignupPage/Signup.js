@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import logo from "../../assets/images/logo.svg";
-import { light } from "../../constants/colors";
+import { light } from "../../constants/theme";
 import {
   LogoWrapper,
   MainHeading,

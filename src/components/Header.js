@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { light } from "../constants/colors";
+import { light } from "../constants/theme";
 
 export default function Header() {
   return (

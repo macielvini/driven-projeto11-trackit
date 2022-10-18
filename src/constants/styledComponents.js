@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { light } from "./colors";
+import { light } from "./theme";
 
 export const MainHeading = styled.h1`
   font-size: 70px;
