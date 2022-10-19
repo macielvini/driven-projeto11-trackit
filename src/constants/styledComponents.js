@@ -44,6 +44,9 @@ export const StyledSignButton = styled.button`
   border-radius: 5px;
 
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   border: none;
 

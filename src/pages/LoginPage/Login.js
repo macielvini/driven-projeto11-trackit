@@ -9,24 +9,39 @@ import {
   LogoWrapper,
   StyledLink,
 } from "../../constants/styledComponents";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { loginUser } from "../../constants/api";
+import { ThreeDots } from "react-loader-spinner";
+import { Context } from "../../App";
 
-export default function Login() {
+export default function Login({ setUser }) {
   const navigate = useNavigate();
+  const user = useContext(Context);
+
   const [form, setForm] = useState({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
 
   function login(e) {
     e.preventDefault();
+    setIsLoading(true);
 
-    const body = { ...form };
-
-    loginUser(body)
+    loginUser({ ...form })
       .then((res) => {
-        console.log(res.data);
+        setUser({
+          id: res.data.id,
+          name: res.data.name,
+          image: res.data.image,
+          email: res.data.email,
+          password: res.data.password,
+          token: res.data.token,
+        });
+
         navigate("/habits");
       })
-      .catch((err) => console.log(err.response.data.message));
+      .catch((err) => {
+        console.log(err.response.data.message);
+        setIsLoading(false);
+      });
   }
 
   function formHandler(e) {
@@ -40,6 +55,7 @@ export default function Login() {
           <img src={logo} alt="" />
           <MainHeading>TrackIt</MainHeading>
         </LogoWrapper>
+
         <Form onSubmit={login}>
           <StyledInput
             type="text"
@@ -47,6 +63,7 @@ export default function Login() {
             name="email"
             onChange={(e) => formHandler(e)}
             value={form.email}
+            disabled={isLoading}
           />
           <StyledInput
             type="password"
@@ -54,9 +71,27 @@ export default function Login() {
             name="password"
             onChange={(e) => formHandler(e)}
             value={form.password}
+            disabled={isLoading}
           />
-          <StyledSignButton type="submit">Entrar</StyledSignButton>
+
+          <StyledSignButton type="submit">
+            {isLoading ? (
+              <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color="#fff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            ) : (
+              "Entrar"
+            )}
+          </StyledSignButton>
         </Form>
+
         <StyledLink to={"/signup"}>Não tem uma conta? Cadastre-se!</StyledLink>
       </Wrapper>
     </>
