@@ -16,7 +16,6 @@ import { Context } from "../../App";
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();
-  const user = useContext(Context);
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
