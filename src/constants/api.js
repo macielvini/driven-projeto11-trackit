@@ -9,6 +9,6 @@ export function registerUser(body) {
   return api.post("/sign-up", body);
 }
 
-export function login(body) {
+export function loginUser(body) {
   return api.post("/login", body);
 }

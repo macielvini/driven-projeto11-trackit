@@ -10,17 +10,27 @@ import {
   StyledLink,
 } from "../../constants/styledComponents";
 import { useState } from "react";
+import { loginUser } from "../../constants/api";
 
 export default function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
 
-  function login() {
-    navigate("/habits");
+  function login(e) {
+    e.preventDefault();
+
+    const body = { ...form };
+
+    loginUser(body)
+      .then((res) => {
+        console.log(res.data);
+        navigate("/habits");
+      })
+      .catch((err) => console.log(err.response.data.message));
   }
 
   function formHandler(e) {
-    setForm({ ...form, [e.target.email]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
 
   return (
