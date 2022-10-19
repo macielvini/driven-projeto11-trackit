@@ -9,12 +9,18 @@ import {
   LogoWrapper,
   StyledLink,
 } from "../../constants/styledComponents";
+import { useState } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [form, setForm] = useState({ email: "", password: "" });
 
   function login() {
     navigate("/habits");
+  }
+
+  function formHandler(e) {
+    setForm({ ...form, [e.target.email]: e.target.value });
   }
 
   return (
@@ -25,8 +31,20 @@ export default function Login() {
           <MainHeading>TrackIt</MainHeading>
         </LogoWrapper>
         <Form onSubmit={login}>
-          <StyledInput type="text" placeholder="email" />
-          <StyledInput type="password" placeholder="password" />
+          <StyledInput
+            type="text"
+            placeholder="email"
+            name="email"
+            onChange={(e) => formHandler(e)}
+            value={form.email}
+          />
+          <StyledInput
+            type="password"
+            placeholder="password"
+            name="password"
+            onChange={(e) => formHandler(e)}
+            value={form.password}
+          />
           <StyledSignButton type="submit">Entrar</StyledSignButton>
         </Form>
         <StyledLink to={"/signup"}>Não tem uma conta? Cadastre-se!</StyledLink>

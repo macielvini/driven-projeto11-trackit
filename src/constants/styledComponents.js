@@ -29,6 +29,11 @@ export const StyledInput = styled.input`
   &::placeholder {
     color: #dbdbdb;
   }
+
+  &:disabled {
+    background: #f2f2f2;
+    color: #afafaf;
+  }
 `;
 
 export const StyledSignButton = styled.button`
@@ -41,6 +46,10 @@ export const StyledSignButton = styled.button`
   color: #fff;
 
   border: none;
+
+  &:disabled {
+    opacity: 0.7;
+  }
 `;
 
 export const StyledLink = styled(Link)`

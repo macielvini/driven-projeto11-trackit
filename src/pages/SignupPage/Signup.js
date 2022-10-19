@@ -8,8 +8,43 @@ import {
   StyledLink,
   StyledSignButton,
 } from "../../constants/styledComponents";
+import { useState } from "react";
+import LoaderAnimation from "../../components/LoaderAnimation";
+import { registerUser } from "../../constants/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const [form, setForm] = useState({
+    email: "",
+    name: "",
+    password: "",
+    image: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  function formHandler(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function signup(e) {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    const body = { ...form };
+
+    registerUser(body)
+      .then((res) => {
+        console.log(res.data);
+        navigate("/");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        alert(err.response.data.details[0]);
+      });
+  }
+
   return (
     <>
       <Wrapper>
@@ -18,14 +53,44 @@ export default function Signup() {
           <MainHeading>TrackIt</MainHeading>
         </LogoWrapper>
 
-        <Form>
-          <StyledInput type="text" placeholder="email" />
-          <StyledInput type="text" placeholder="senha" />
-          <StyledInput type="text" placeholder="nome" />
-          <StyledInput type="text" placeholder="url da foto" />
-
-          <StyledSignButton>Cadastrar</StyledSignButton>
+        <Form onSubmit={signup}>
+          <StyledInput
+            type="text"
+            placeholder="email"
+            name="email"
+            onChange={(e) => formHandler(e)}
+            value={form.email}
+            disabled={isLoading}
+          />
+          <StyledInput
+            type="password"
+            placeholder="senha"
+            name="password"
+            onChange={(e) => formHandler(e)}
+            value={form.password}
+            disabled={isLoading}
+          />
+          <StyledInput
+            type="text"
+            placeholder="nome"
+            name="name"
+            onChange={(e) => formHandler(e)}
+            value={form.name}
+            disabled={isLoading}
+          />
+          <StyledInput
+            type="text"
+            placeholder="url da foto"
+            name="image"
+            onChange={(e) => formHandler(e)}
+            value={form.image}
+            disabled={isLoading}
+          />
+          <StyledSignButton type="submit">
+            {isLoading ? <LoaderAnimation /> : "Cadastrar"}
+          </StyledSignButton>
         </Form>
+
         <StyledLink to={"/"}>Já tem uma conta? Faça login!</StyledLink>
       </Wrapper>
     </>
