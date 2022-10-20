@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import { postHabit } from "../constants/api";
 import { StyledInput, StyledSignButton } from "../constants/styledComponents";
@@ -6,6 +7,7 @@ import { StyledInput, StyledSignButton } from "../constants/styledComponents";
 export default function AddHabit({ setShowAddHabit }) {
   const [selectedDays, setSelectedDays] = useState([]);
   const [habitName, setHabitName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const userToken = localStorage.getItem("token");
 
@@ -27,8 +29,13 @@ export default function AddHabit({ setShowAddHabit }) {
       },
     };
 
+    if (isLoading === false) setIsLoading(true);
+
     postHabit(body, config)
-      .then(() => setShowAddHabit(false))
+      .then(() => {
+        setShowAddHabit(false);
+        setIsLoading(false);
+      })
       .catch((err) => console.log(err.response.data));
 
     setSelectedDays([]);
@@ -47,6 +54,7 @@ export default function AddHabit({ setShowAddHabit }) {
           placeholder="nome do hábito"
           name="habit"
           onChange={(e) => setHabitName(e.target.value)}
+          disabled={isLoading}
         />
         <DayList>
           {["D", "S", "T", "Q", "Q", "S", "S"].map((d, i) => (
@@ -61,7 +69,23 @@ export default function AddHabit({ setShowAddHabit }) {
         </DayList>
         <div>
           <CancelBtn onClick={cancelHabit}>Cancelar</CancelBtn>
-          <SaveBtn onClick={saveHabit}>Salvar</SaveBtn>
+          <SaveBtn onClick={saveHabit} disabled={isLoading}>
+            {" "}
+            {isLoading ? (
+              <ThreeDots
+                height="50"
+                width="50"
+                radius="9"
+                color="#fff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            ) : (
+              "Salvar"
+            )}
+          </SaveBtn>
         </div>
       </CardContainer>
     </>
