@@ -41,17 +41,17 @@ export default function Habits() {
         {showAddHabit ? <AddHabit setShowAddHabit={setShowAddHabit} /> : ""}
 
         <div>
-          {myHabits.length > 0
-            ? myHabits.map((habit) => (
-                <HabitCard key={habit.id} name={habit.name} days={habit.days} />
-              ))
-            : "carregando"}
+          {myHabits.length > 0 ? (
+            myHabits.map((habit) => (
+              <HabitCard key={habit.id} name={habit.name} days={habit.days} />
+            ))
+          ) : (
+            <NoHabitsText>
+              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+              para começar a trackear!
+            </NoHabitsText>
+          )}
         </div>
-
-        <NoHabitsText>
-          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-          começar a trackear!
-        </NoHabitsText>
       </Wrapper>
       <Navbar />
     </>
