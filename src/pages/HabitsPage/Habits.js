@@ -1,8 +1,8 @@
 import styled from "styled-components";
+import HabitCard from "../../components/HabitCard";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
-import { StyledPlusBtn } from "../../constants/styledComponents";
-import { light } from "../../constants/theme";
+import { PageTitle, StyledPlusBtn } from "../../constants/styledComponents";
 
 export default function Habits() {
   return (
@@ -10,9 +10,14 @@ export default function Habits() {
       <Header />
       <Wrapper>
         <div>
-          <p>Meus hábitos</p>
+          <PageTitle>Meus hábitos</PageTitle>
           <StyledPlusBtn>+</StyledPlusBtn>
         </div>
+        <HabitCard />
+        <NoHabitsText>
+          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+          começar a trackear!
+        </NoHabitsText>
       </Wrapper>
       <Navbar />
     </>
@@ -20,7 +25,7 @@ export default function Habits() {
 }
 
 const Wrapper = styled.div`
-  min-width: 100vw;
+  max-width: 100vw;
   min-height: 100vh;
   padding: 70px 12px 70px;
 
@@ -33,9 +38,9 @@ const Wrapper = styled.div`
 
     margin: 22px 0 28px;
   }
+`;
 
-  p {
-    color: ${light.text.mainHeading};
-    font-size: 23px;
-  }
+const NoHabitsText = styled.p`
+  font-size: 18px;
+  color: #666;
 `;

@@ -99,8 +99,9 @@ export default function Login({ setUser }) {
 
 const Wrapper = styled.div`
   background-color: ${light.background};
+  padding: 0 18px;
 
-  min-width: 100vw;
+  width: 100vw;
   min-height: 100vh;
 
   display: flex;
@@ -116,6 +117,8 @@ const Wrapper = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+
+  width: 100%;
 
   gap: 6px;
 `;

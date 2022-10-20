@@ -17,7 +17,7 @@ export const LogoWrapper = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  width: 303px;
+  width: 100%;
   height: 45px;
 
   background: #ffffff;
@@ -37,7 +37,7 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledSignButton = styled.button`
-  width: 303px;
+  width: 100%;
   height: 45px;
 
   background: #52b6ff;
@@ -76,4 +76,9 @@ export const StyledPlusBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const PageTitle = styled.p`
+  color: ${light.text.mainHeading};
+  font-size: 23px;
 `;

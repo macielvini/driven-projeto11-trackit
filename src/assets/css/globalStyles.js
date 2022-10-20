@@ -386,6 +386,10 @@ li{
   list-style: none;
   display: inline-block;
 }
+
+a, button {
+  cursor: pointer;
+}
 `;
 
 export default GlobalStyle;

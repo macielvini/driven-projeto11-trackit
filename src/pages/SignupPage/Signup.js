@@ -99,6 +99,7 @@ export default function Signup() {
 
 const Wrapper = styled.div`
   background-color: ${light.background};
+  padding: 0 18px;
 
   min-width: 100vw;
   min-height: 100vh;
@@ -118,4 +119,6 @@ const Form = styled.form`
   flex-direction: column;
 
   gap: 6px;
+
+  width: 100%;
 `;
