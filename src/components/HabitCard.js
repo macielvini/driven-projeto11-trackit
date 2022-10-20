@@ -1,10 +1,29 @@
 import styled from "styled-components";
+import { deleteHabit } from "../constants/api";
 
-export default function HabitCard({ name, days }) {
+export default function HabitCard({
+  name,
+  days,
+  habitId,
+  myHabits,
+  setMyHabits,
+}) {
+  function delHabit() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    deleteHabit(habitId, config)
+      .then(setMyHabits([...myHabits]))
+      .catch((err) => console.log(err.response.data));
+  }
+
   return (
     <>
       <Card>
-        <ion-icon name="trash-outline"></ion-icon>
+        <ion-icon name="trash-outline" onClick={delHabit}></ion-icon>
         <p>{name}</p>
         <DayList>
           {["D", "S", "T", "Q", "Q", "S", "S"].map((d, i) => (

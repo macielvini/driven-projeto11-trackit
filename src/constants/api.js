@@ -19,3 +19,7 @@ export function postHabit(body, config) {
 export function getHabits(config) {
   return api.get("/habits", config);
 }
+
+export function deleteHabit(id, config) {
+  return api.delete(`/habits/${id}`, config);
+}

@@ -22,7 +22,7 @@ export default function Habits() {
       .then((res) => setMyHabits(res.data))
       .catch((err) => console.log(err.response.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddHabit]);
+  }, [showAddHabit, myHabits]);
 
   return (
     <>
@@ -42,7 +42,14 @@ export default function Habits() {
         <div>
           {myHabits.length > 0 ? (
             myHabits.map((habit) => (
-              <HabitCard key={habit.id} name={habit.name} days={habit.days} />
+              <HabitCard
+                myHabits={myHabits}
+                setMyHabits={setMyHabits}
+                key={habit.id}
+                habitId={habit.id}
+                name={habit.name}
+                days={habit.days}
+              />
             ))
           ) : (
             <NoHabitsText>
