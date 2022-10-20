@@ -36,7 +36,10 @@ export default function AddHabit({ setShowAddHabit }) {
         setShowAddHabit(false);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err.response.data));
+      .catch((err) => {
+        setIsLoading(false);
+        alert(err.response.data);
+      });
 
     setSelectedDays([]);
     setHabitName("");
