@@ -18,6 +18,7 @@ export default function App() {
   });
 
   localStorage.setItem("token", user.token);
+  localStorage.setItem("image", user.image);
 
   return (
     <>

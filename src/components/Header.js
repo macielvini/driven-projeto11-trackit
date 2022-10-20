@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { light } from "../constants/theme";
 
 export default function Header() {
+  const image = localStorage.getItem("image");
+
   return (
     <>
       <Link to={"/habits"}>
         <StyledHeader>
           <h1>TrackIt</h1>
           <ImgContainer>
-            <img src="" alt="" />
+            <img src={image} alt="" />
           </ImgContainer>
         </StyledHeader>
       </Link>
@@ -45,7 +47,10 @@ const StyledHeader = styled.header`
 
   img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
+
+    clip-path: circle(50%);
   }
 `;
 

@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { Context } from "../App";
-import { getHabits, postHabit } from "../constants/api";
+import { postHabit } from "../constants/api";
 import { StyledInput, StyledSignButton } from "../constants/styledComponents";
 
 export default function AddHabit({ setShowAddHabit }) {

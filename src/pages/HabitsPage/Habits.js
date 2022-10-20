@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Context } from "../../App";
 import AddHabit from "../../components/AddHabit";
 import HabitCard from "../../components/HabitCard";
 import Header from "../../components/Header";
