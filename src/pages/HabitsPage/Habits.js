@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import HabitCard from "../../components/HabitCard";
 import Header from "../../components/Header";
@@ -5,15 +6,23 @@ import Navbar from "../../components/Navbar";
 import { PageTitle, StyledPlusBtn } from "../../constants/styledComponents";
 
 export default function Habits() {
+  const [showHabitInput, setShowHabitInput] = useState(false);
+
   return (
     <>
       <Header />
       <Wrapper>
         <div>
           <PageTitle>Meus hábitos</PageTitle>
-          <StyledPlusBtn>+</StyledPlusBtn>
+          <StyledPlusBtn onClick={() => setShowHabitInput(true)}>
+            +
+          </StyledPlusBtn>
         </div>
-        <HabitCard />
+        {showHabitInput ? (
+          <HabitCard setShowHabitInput={setShowHabitInput} />
+        ) : (
+          ""
+        )}
         <NoHabitsText>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
           começar a trackear!
