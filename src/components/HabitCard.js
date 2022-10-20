@@ -4,7 +4,7 @@ import { Context } from "../App";
 import { postHabit } from "../constants/api";
 import { StyledInput, StyledSignButton } from "../constants/styledComponents";
 
-export default function HabitCard() {
+export default function HabitCard({ setShowHabitInput }) {
   const [selectedDays, setSelectedDays] = useState([]);
   const [habitName, setHabitName] = useState("");
 
@@ -32,6 +32,10 @@ export default function HabitCard() {
       .catch((err) => console.log(err.response.data));
   }
 
+  function cancelHabit() {
+    setShowHabitInput(false);
+  }
+
   return (
     <>
       <CardContainer>
@@ -53,7 +57,7 @@ export default function HabitCard() {
           ))}
         </DayList>
         <div>
-          <CancelBtn>Cancelar</CancelBtn>
+          <CancelBtn onClick={cancelHabit}>Cancelar</CancelBtn>
           <SaveBtn onClick={saveHabit}>Salvar</SaveBtn>
         </div>
       </CardContainer>
