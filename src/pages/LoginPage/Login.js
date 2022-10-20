@@ -9,10 +9,9 @@ import {
   LogoWrapper,
   StyledLink,
 } from "../../constants/styledComponents";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { loginUser } from "../../constants/api";
 import { ThreeDots } from "react-loader-spinner";
-import { Context } from "../../App";
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();

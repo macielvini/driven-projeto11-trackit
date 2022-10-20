@@ -1,23 +1,60 @@
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { Context } from "../App";
+import { postHabit } from "../constants/api";
 import { StyledInput, StyledSignButton } from "../constants/styledComponents";
 
 export default function HabitCard() {
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [habitName, setHabitName] = useState("");
+
+  const user = useContext(Context);
+
+  function addDay(day) {
+    if (selectedDays.includes(day)) {
+      setSelectedDays(selectedDays.filter((d) => d !== day));
+      return;
+    }
+
+    setSelectedDays([...selectedDays, day]);
+  }
+
+  function saveHabit() {
+    const body = { name: habitName, days: selectedDays };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    postHabit(body, config)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err.response.data));
+  }
+
   return (
     <>
       <CardContainer>
-        <CardInput type="text" placeholder="nome do hábito" />
+        <CardInput
+          type="text"
+          placeholder="nome do hábito"
+          name="habit"
+          onChange={(e) => setHabitName(e.target.value)}
+        />
         <DayList>
-          <Day>D</Day>
-          <Day>S</Day>
-          <Day>T</Day>
-          <Day>Q</Day>
-          <Day>Q</Day>
-          <Day>S</Day>
-          <Day>S</Day>
+          {["D", "S", "T", "Q", "Q", "S", "S"].map((d, i) => (
+            <Day
+              isSelected={selectedDays.includes(i)}
+              key={i}
+              onClick={() => addDay(i)}
+            >
+              {d}
+            </Day>
+          ))}
         </DayList>
         <div>
           <CancelBtn>Cancelar</CancelBtn>
-          <SaveBtn>Salvar</SaveBtn>
+          <SaveBtn onClick={saveHabit}>Salvar</SaveBtn>
         </div>
       </CardContainer>
     </>
@@ -54,11 +91,11 @@ const Day = styled.li`
   width: 30px;
   height: 30px;
 
-  background: #ffffff;
+  background: ${(props) => (props.isSelected ? "#cfcfcf" : "none")};
   border: 1px solid #d5d5d5;
   border-radius: 5px;
 
-  color: #dbdbdb;
+  color: ${(props) => (props.isSelected ? "#fff" : "#dbdbdb")};
 
   display: flex;
   justify-content: center;
@@ -76,6 +113,7 @@ const CancelBtn = styled.button`
   background: none;
   border: none;
 `;
+
 const SaveBtn = styled(StyledSignButton)`
   width: 84px;
 `;
