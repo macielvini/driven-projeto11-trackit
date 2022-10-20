@@ -17,6 +17,8 @@ export default function App() {
     token: "",
   });
 
+  localStorage.setItem("token", user.token);
+
   return (
     <>
       <Context.Provider value={user}>

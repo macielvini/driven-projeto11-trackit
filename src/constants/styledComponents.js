@@ -81,4 +81,10 @@ export const StyledPlusBtn = styled.button`
 export const PageTitle = styled.p`
   color: ${light.text.mainHeading};
   font-size: 23px;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

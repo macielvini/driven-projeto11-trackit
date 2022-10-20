@@ -15,3 +15,7 @@ export function loginUser(body) {
 export function postHabit(body, config) {
   return api.post("/habits", body, config);
 }
+
+export function getHabits(config) {
+  return api.get("/habits", config);
+}

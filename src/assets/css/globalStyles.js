@@ -387,7 +387,7 @@ li{
   display: inline-block;
 }
 
-a, button {
+a, button, ion-icon {
   cursor: pointer;
 }
 `;

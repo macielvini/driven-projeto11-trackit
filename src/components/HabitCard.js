@@ -1,88 +1,46 @@
-import { useContext, useState } from "react";
 import styled from "styled-components";
-import { Context } from "../App";
-import { postHabit } from "../constants/api";
-import { StyledInput, StyledSignButton } from "../constants/styledComponents";
 
-export default function HabitCard({ setShowHabitInput }) {
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [habitName, setHabitName] = useState("");
-
-  const user = useContext(Context);
-
-  function addDay(day) {
-    if (selectedDays.includes(day)) {
-      setSelectedDays(selectedDays.filter((d) => d !== day));
-      return;
-    }
-
-    setSelectedDays([...selectedDays, day]);
-  }
-
-  function saveHabit() {
-    const body = { name: habitName, days: selectedDays };
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    postHabit(body, config)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err.response.data));
-  }
-
-  function cancelHabit() {
-    setShowHabitInput(false);
-  }
-
+export default function HabitCard({ name, days }) {
   return (
     <>
-      <CardContainer>
-        <CardInput
-          type="text"
-          placeholder="nome do hábito"
-          name="habit"
-          onChange={(e) => setHabitName(e.target.value)}
-        />
+      <Card>
+        <ion-icon name="trash-outline"></ion-icon>
+        <p>{name}</p>
         <DayList>
           {["D", "S", "T", "Q", "Q", "S", "S"].map((d, i) => (
-            <Day
-              isSelected={selectedDays.includes(i)}
-              key={i}
-              onClick={() => addDay(i)}
-            >
+            <Day key={i} isSelected={days.includes(i)}>
               {d}
             </Day>
           ))}
         </DayList>
-        <div>
-          <CancelBtn onClick={cancelHabit}>Cancelar</CancelBtn>
-          <SaveBtn onClick={saveHabit}>Salvar</SaveBtn>
-        </div>
-      </CardContainer>
+      </Card>
     </>
   );
 }
 
-const CardContainer = styled.div`
+const Card = styled.div`
   width: 100%;
   background: #ffffff;
   border-radius: 5px;
+  padding: 15px;
+  position: relative;
 
   display: flex;
   flex-direction: column;
-  padding: 18px;
+  gap: 8px;
 
-  & > div {
-    align-self: flex-end;
-    gap: 23px;
-    margin: 0;
+  ion-icon {
+    font-size: 20px;
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    z-index: 1;
   }
-`;
 
-const CardInput = styled(StyledInput)`
-  width: 100%;
+  & > p {
+    font-size: 20px;
+    color: #666666;
+  }
 `;
 
 const DayList = styled.ul`
@@ -105,19 +63,5 @@ const Day = styled.li`
   justify-content: center;
   align-items: center;
 
-  margin: 8px 0 30px;
-
   cursor: pointer;
-`;
-
-const CancelBtn = styled.button`
-  font-size: 16px;
-  color: #52b6ff;
-
-  background: none;
-  border: none;
-`;
-
-const SaveBtn = styled(StyledSignButton)`
-  width: 84px;
 `;

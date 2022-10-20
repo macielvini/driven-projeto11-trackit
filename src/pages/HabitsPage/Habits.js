@@ -1,28 +1,53 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { Context } from "../../App";
+import AddHabit from "../../components/AddHabit";
 import HabitCard from "../../components/HabitCard";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
+import { getHabits } from "../../constants/api";
 import { PageTitle, StyledPlusBtn } from "../../constants/styledComponents";
 
 export default function Habits() {
-  const [showHabitInput, setShowHabitInput] = useState(false);
+  const [showAddHabit, setShowAddHabit] = useState(false);
+  const [myHabits, setMyHabits] = useState([]);
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    getHabits(config)
+      .then((res) => setMyHabits(res.data))
+      .catch((err) => console.log(err.response.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showAddHabit]);
 
   return (
     <>
       <Header />
       <Wrapper>
         <div>
-          <PageTitle>Meus hábitos</PageTitle>
-          <StyledPlusBtn onClick={() => setShowHabitInput(true)}>
-            +
-          </StyledPlusBtn>
+          <PageTitle>
+            Meus hábitos
+            <StyledPlusBtn onClick={() => setShowAddHabit(true)}>
+              +
+            </StyledPlusBtn>
+          </PageTitle>
         </div>
-        {showHabitInput ? (
-          <HabitCard setShowHabitInput={setShowHabitInput} />
-        ) : (
-          ""
-        )}
+
+        {showAddHabit ? <AddHabit setShowAddHabit={setShowAddHabit} /> : ""}
+
+        <div>
+          {myHabits.length > 0
+            ? myHabits.map((habit) => (
+                <HabitCard key={habit.id} name={habit.name} days={habit.days} />
+              ))
+            : "carregando"}
+        </div>
+
         <NoHabitsText>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
           começar a trackear!
@@ -40,10 +65,12 @@ const Wrapper = styled.div`
 
   background-color: #e5e5e5;
 
-  div {
+  & > div {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 
     margin: 22px 0 28px;
   }
