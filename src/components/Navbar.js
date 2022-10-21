@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { light } from "../constants/theme";
 
@@ -6,11 +7,17 @@ export default function Navbar() {
     <>
       <StyledNavbar>
         <ul>
-          <li>Hábitos</li>
+          <Link to="/habits">
+            <li>Hábitos</li>
+          </Link>
           <TodayLi>
-            <span>Hoje</span>
+            <Link to="/today">
+              <span>Hoje</span>
+            </Link>
           </TodayLi>
-          <li>Histórico</li>
+          <Link to="/habits">
+            <li>Histórico</li>
+          </Link>
         </ul>
       </StyledNavbar>
     </>

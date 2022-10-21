@@ -1,13 +1,7 @@
 import styled from "styled-components";
 import { deleteHabit } from "../constants/api";
 
-export default function HabitCard({
-  name,
-  days,
-  habitId,
-  myHabits,
-  setMyHabits,
-}) {
+export default function HabitCard({ name, days, habitId, updateHabits }) {
   function delHabit() {
     if (!window.confirm("Apagar hábito?")) return;
 
@@ -18,7 +12,7 @@ export default function HabitCard({
     };
 
     deleteHabit(habitId, config)
-      .then(setMyHabits([...myHabits]))
+      .then(() => updateHabits())
       .catch((err) => console.log(err.response.data));
   }
 

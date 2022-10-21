@@ -5,13 +5,17 @@ import HabitCard from "../../components/HabitCard";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 import { getHabits } from "../../constants/api";
-import { PageTitle, StyledPlusBtn } from "../../constants/styledComponents";
+import {
+  PageTitle,
+  StyledPlusBtn,
+  PageContainer,
+} from "../../constants/styledComponents";
 
 export default function Habits() {
   const [showAddHabit, setShowAddHabit] = useState(false);
   const [myHabits, setMyHabits] = useState([]);
 
-  useEffect(() => {
+  function updateHabits() {
     const config = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -19,15 +23,22 @@ export default function Habits() {
     };
 
     getHabits(config)
-      .then((res) => setMyHabits(res.data))
-      .catch((err) => console.log(err.response.data));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddHabit, myHabits]);
+      .then((res) => {
+        setMyHabits(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }
+
+  useEffect(() => {
+    updateHabits();
+  }, []);
 
   return (
     <>
       <Header />
-      <Wrapper>
+      <PageContainer>
         <div>
           <PageTitle>
             Meus hábitos
@@ -37,14 +48,20 @@ export default function Habits() {
           </PageTitle>
         </div>
 
-        {showAddHabit ? <AddHabit setShowAddHabit={setShowAddHabit} /> : ""}
+        {showAddHabit ? (
+          <AddHabit
+            setShowAddHabit={setShowAddHabit}
+            updateHabits={updateHabits}
+          />
+        ) : (
+          ""
+        )}
 
         <div>
           {myHabits.length > 0 ? (
             myHabits.map((habit) => (
               <HabitCard
-                myHabits={myHabits}
-                setMyHabits={setMyHabits}
+                updateHabits={updateHabits}
                 key={habit.id}
                 habitId={habit.id}
                 name={habit.name}
@@ -58,29 +75,11 @@ export default function Habits() {
             </NoHabitsText>
           )}
         </div>
-      </Wrapper>
+      </PageContainer>
       <Navbar />
     </>
   );
 }
-
-const Wrapper = styled.div`
-  max-width: 100vw;
-  min-height: 100vh;
-  padding: 70px 12px 70px;
-
-  background-color: #e5e5e5;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-
-    margin: 22px 0 28px;
-  }
-`;
 
 const NoHabitsText = styled.p`
   font-size: 18px;

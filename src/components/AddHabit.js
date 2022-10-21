@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { postHabit } from "../constants/api";
 import { StyledInput, StyledSignButton } from "../constants/styledComponents";
 
-export default function AddHabit({ setShowAddHabit }) {
+export default function AddHabit({ setShowAddHabit, updateHabits }) {
   const [selectedDays, setSelectedDays] = useState([]);
   const [habitName, setHabitName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,14 @@ export default function AddHabit({ setShowAddHabit }) {
     setSelectedDays([...selectedDays, day]);
   }
 
+  function cancelHabit() {
+    setShowAddHabit(false);
+    updateHabits();
+  }
+
   function saveHabit() {
+    setIsLoading(true);
+
     const body = { name: habitName, days: selectedDays };
 
     const config = {
@@ -29,12 +36,10 @@ export default function AddHabit({ setShowAddHabit }) {
       },
     };
 
-    if (isLoading === false) setIsLoading(true);
-
     postHabit(body, config)
       .then(() => {
         setShowAddHabit(false);
-        setIsLoading(false);
+        updateHabits();
       })
       .catch((err) => {
         setIsLoading(false);
@@ -43,10 +48,6 @@ export default function AddHabit({ setShowAddHabit }) {
 
     setSelectedDays([]);
     setHabitName("");
-  }
-
-  function cancelHabit() {
-    setShowAddHabit(false);
   }
 
   return (

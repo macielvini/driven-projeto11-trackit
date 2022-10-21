@@ -88,3 +88,21 @@ export const PageTitle = styled.p`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const PageContainer = styled.div`
+  max-width: 100vw;
+  min-height: 100vh;
+  padding: 70px 12px 70px;
+
+  background-color: #e5e5e5;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    margin: 22px 0 28px;
+  }
+`;
