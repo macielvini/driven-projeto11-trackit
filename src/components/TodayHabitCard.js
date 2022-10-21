@@ -1,18 +1,56 @@
+import { useState } from "react";
 import styled from "styled-components";
 import check from "../assets/images/check.svg";
+import { postCheckHabit, postUncheckHabit } from "../constants/api";
 
-export default function TodayHabitCard() {
+export default function TodayHabitCard({
+  id,
+  name,
+  done,
+  currentSequence,
+  highestSequence,
+  updateHabits,
+}) {
+  const [isDone, setIsDone] = useState(done);
+
+  function checkHabit() {
+    if (isDone) {
+      setIsDone(false);
+      postUncheckHabit(id)
+        .then(() => updateHabits())
+        .catch((err) => {
+          setIsDone(true);
+          console.log(err.response.data);
+        });
+    } else {
+      setIsDone(true);
+      postCheckHabit(id)
+        .then(() => updateHabits())
+        .catch((err) => {
+          setIsDone(false);
+          console.log(err.response.data);
+        });
+    }
+  }
+
   return (
     <>
-      <Card>
+      <Card done={isDone}>
         <div>
-          <CardTitle>Ler 1 capítulo de livro</CardTitle>
+          <CardTitle>{name}</CardTitle>
           <div>
-            <p>Sequencia atual: 3 dias</p>
-            <p>Seu recorde: 5 dias</p>
+            <CurrentSequence done={isDone}>
+              Sequencia atual:
+              <span>{isDone ? currentSequence + 1 : currentSequence} dias</span>
+            </CurrentSequence>
+
+            <HighestSequence sequence={highestSequence === currentSequence}>
+              Seu recorde:
+              <span>{isDone ? highestSequence + 1 : highestSequence} dias</span>
+            </HighestSequence>
           </div>
         </div>
-        <Check>
+        <Check done={isDone} onClick={checkHabit}>
           <img src={check} alt="check symbol" />
         </Check>
       </Card>
@@ -29,14 +67,26 @@ const Card = styled.div`
   display: flex;
   justify-content: space-between;
 
+  color: #666666;
+
   & > div > div {
     margin-top: 7px;
   }
+`;
 
-  & > div > div > p {
-    font-size: 13px;
+const CurrentSequence = styled.span`
+  font-size: 13px;
 
-    color: #666666;
+  span {
+    color: ${(props) => (props.done ? "#8FC549" : "#666666")};
+  }
+`;
+
+const HighestSequence = styled.p`
+  font-size: 13px;
+
+  span {
+    color: ${(props) => (props.sequence ? "#8FC549" : "#666666")};
   }
 `;
 
@@ -47,10 +97,11 @@ const CardTitle = styled.p`
 `;
 
 const Check = styled.button`
-  width: 69px;
+  min-width: 69px;
   height: 69px;
+  margin-left: 15px;
 
-  background: #8fc549;
+  background: ${(props) => (props.done ? "#8fc549" : "#EBEBEB")};
   border-radius: 5px;
   border: none;
 

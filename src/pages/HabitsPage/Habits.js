@@ -16,13 +16,7 @@ export default function Habits() {
   const [myHabits, setMyHabits] = useState([]);
 
   function updateHabits() {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-
-    getHabits(config)
+    getHabits()
       .then((res) => {
         setMyHabits(res.data);
       })

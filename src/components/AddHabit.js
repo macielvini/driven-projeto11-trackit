@@ -9,8 +9,6 @@ export default function AddHabit({ setShowAddHabit, updateHabits }) {
   const [habitName, setHabitName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const userToken = localStorage.getItem("token");
-
   function addDay(day) {
     if (selectedDays.includes(day)) {
       setSelectedDays(selectedDays.filter((d) => d !== day));
@@ -30,13 +28,7 @@ export default function AddHabit({ setShowAddHabit, updateHabits }) {
 
     const body = { name: habitName, days: selectedDays };
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    };
-
-    postHabit(body, config)
+    postHabit(body)
       .then(() => {
         setShowAddHabit(false);
         updateHabits();

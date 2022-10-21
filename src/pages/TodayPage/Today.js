@@ -3,8 +3,9 @@ import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 import { PageContainer, PageTitle } from "../../constants/styledComponents";
 import TodayHabitCard from "../../components/TodayHabitCard";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DayJS from "react-dayjs";
+import { getTodayHabits } from "../../constants/api";
 
 export default function Today() {
   const newDate = new Date();
@@ -17,6 +18,19 @@ export default function Today() {
     "Sexta",
     "Sábado",
   ];
+  const [todayHabits, setTodayHabits] = useState([]);
+  const doneList = todayHabits.filter((h) => h.done).length;
+
+  function updateHabits() {
+    getTodayHabits()
+      .then((res) => setTodayHabits(res.data))
+      .catch((err) => console.warn(err.response.data));
+  }
+
+  useEffect(() => {
+    updateHabits();
+  }, []);
+
   return (
     <>
       <Header />
@@ -24,14 +38,32 @@ export default function Today() {
         <div>
           <PageTitle>
             <span>
-              {weekDay[newDate.getDay()]}, {newDate.getDate()}/
-              <DayJS date={newDate} format="MM" />
+              {weekDay[newDate.getDay()]},
+              <DayJS date={newDate} format="DD/MM" />
             </span>
           </PageTitle>
-          <PageSubtitle>Nenhum hábito concluído ainda</PageSubtitle>
+          <PageSubtitle done={doneList > 0}>
+            {doneList > 0
+              ? `${Math.ceil(
+                  (doneList * 100) / todayHabits.length
+                )}% dos hábitos concluídos`
+              : "Nenhum hábito concluído ainda"}
+          </PageSubtitle>
         </div>
         <div>
-          <TodayHabitCard />
+          {todayHabits.length > 0
+            ? todayHabits.map((h) => (
+                <TodayHabitCard
+                  key={h.id}
+                  id={h.id}
+                  name={h.name}
+                  done={h.done}
+                  currentSequence={h.currentSequence}
+                  highestSequence={h.highestSequence}
+                  updateHabits={updateHabits}
+                />
+              ))
+            : "carregando"}
         </div>
       </PageContainer>
       <Navbar />
@@ -42,5 +74,5 @@ export default function Today() {
 const PageSubtitle = styled.p`
   width: 100%;
   font-size: 18px;
-  color: #bababa;
+  color: ${(props) => (props.done ? " #8FC549" : "#bababa")};
 `;

@@ -5,13 +5,7 @@ export default function HabitCard({ name, days, habitId, updateHabits }) {
   function delHabit() {
     if (!window.confirm("Apagar hábito?")) return;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-
-    deleteHabit(habitId, config)
+    deleteHabit(habitId)
       .then(() => updateHabits())
       .catch((err) => console.log(err.response.data));
   }
