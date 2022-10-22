@@ -15,7 +15,7 @@ export default function Navbar() {
               <span>Hoje</span>
             </Link>
           </TodayLi>
-          <Link to="/habits">
+          <Link to="/history">
             <li>Histórico</li>
           </Link>
         </ul>
@@ -23,7 +23,7 @@ export default function Navbar() {
     </>
   );
 }
-
+//
 const StyledNavbar = styled.nav`
   position: fixed;
   bottom: 0;

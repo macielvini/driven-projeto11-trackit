@@ -4,7 +4,7 @@ const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
 
 const api = axios.create({ baseURL: BASE_URL });
 
-export const HEADER = {
+export const HEADERS = {
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
@@ -19,25 +19,25 @@ export function loginUser(body) {
 }
 
 export function postHabit(body) {
-  return api.post("/habits", body, HEADER);
+  return api.post("/habits", body, HEADERS);
 }
 
 export function getHabits() {
-  return api.get("/habits", HEADER);
+  return api.get("/habits", HEADERS);
 }
 
 export function deleteHabit(id) {
-  return api.delete(`/habits/${id}`, HEADER);
+  return api.delete(`/habits/${id}`, HEADERS);
 }
 
 export function getTodayHabits() {
-  return api.get("/habits/today", HEADER);
+  return api.get("/habits/today", HEADERS);
 }
 
 export function postCheckHabit(id) {
-  return api.post(`/habits/${id}/check`, {}, HEADER);
+  return api.post(`/habits/${id}/check`, {}, HEADERS);
 }
 
 export function postUncheckHabit(id) {
-  return api.post(`/habits/${id}/uncheck`, {}, HEADER);
+  return api.post(`/habits/${id}/uncheck`, {}, HEADERS);
 }
