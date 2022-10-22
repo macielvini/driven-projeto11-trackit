@@ -4,11 +4,15 @@ import { light } from "../constants/theme";
 
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../App";
 
 export default function Navbar() {
   const user = useContext(Context);
+
+  useEffect(() => {
+    console.log(user.doneToday);
+  }, [user]);
 
   return (
     <>
@@ -20,8 +24,9 @@ export default function Navbar() {
           <TodayLi>
             <Link to="/today">
               <CircularProgressbar
-                value={user.doneToday}
+                value={isNaN(user.doneToday) ? 0 : user.doneToday}
                 maxValue={1}
+                minValue={0}
                 text={"Hoje"}
                 background
                 backgroundPadding={6}
