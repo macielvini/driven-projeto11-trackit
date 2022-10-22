@@ -2,7 +2,14 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { light } from "../constants/theme";
 
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { useContext } from "react";
+import { Context } from "../App";
+
 export default function Navbar() {
+  const user = useContext(Context);
+
   return (
     <>
       <StyledNavbar>
@@ -12,7 +19,19 @@ export default function Navbar() {
           </Link>
           <TodayLi>
             <Link to="/today">
-              <span>Hoje</span>
+              <CircularProgressbar
+                value={user.doneToday}
+                maxValue={1}
+                text={"Hoje"}
+                background
+                backgroundPadding={6}
+                styles={buildStyles({
+                  backgroundColor: "#52B6FF",
+                  textColor: "#fff",
+                  pathColor: "#fff",
+                  trailColor: "transparent",
+                })}
+              />
             </Link>
           </TodayLi>
           <Link to="/history">
@@ -75,5 +94,12 @@ const TodayLi = styled.li`
 
   span {
     color: ${light.background};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > * {
+      width: 90%;
+      height: 90%;
+    }
   }
 `;

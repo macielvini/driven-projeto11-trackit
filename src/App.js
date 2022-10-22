@@ -17,6 +17,7 @@ export default function App() {
     email: "",
     password: "",
     token: "",
+    doneToday: 0,
   });
 
   localStorage.setItem("token", user.token);
@@ -31,7 +32,7 @@ export default function App() {
             <Route path="/" element={<Login setUser={setUser} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/habits" element={<Habits />} />
-            <Route path="/today" element={<Today />} />
+            <Route path="/today" element={<Today setUser={setUser} />} />
             <Route path="/history" element={<History />} />
           </Routes>
         </BrowserRouter>

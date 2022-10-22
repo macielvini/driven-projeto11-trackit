@@ -32,9 +32,10 @@ export default function Login({ setUser }) {
           email: res.data.email,
           password: res.data.password,
           token: res.data.token,
+          doneToday: 0,
         });
 
-        navigate("/habits");
+        navigate("/today");
       })
       .catch((err) => {
         console.log(err.response.data.message);
