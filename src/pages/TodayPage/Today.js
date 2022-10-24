@@ -4,22 +4,16 @@ import Navbar from "../../components/Navbar";
 import { PageContainer, PageTitle } from "../../constants/styledComponents";
 import TodayHabitCard from "../../components/TodayHabitCard";
 import React, { useContext, useEffect, useState } from "react";
-import DayJS from "react-dayjs";
 import { getTodayHabits } from "../../constants/api";
 import { Context } from "../../App";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import { TailSpin } from "react-loader-spinner";
+import { light } from "../../constants/theme";
 
 export default function Today({ setUser }) {
   const user = useContext(Context);
-  const newDate = new Date();
-  const weekDay = [
-    "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
-  ];
+
   const [todayHabits, setTodayHabits] = useState([]);
   const doneList = todayHabits.filter((h) => h.done).length;
 
@@ -43,10 +37,7 @@ export default function Today({ setUser }) {
       <PageContainer>
         <div>
           <PageTitle>
-            <span>
-              {weekDay[newDate.getDay()]},
-              <DayJS date={newDate} format="DD/MM" />
-            </span>
+            <span>{dayjs().locale("pt-br").format("dddd, DD/MM")}</span>
           </PageTitle>
           <PageSubtitle done={doneList > 0}>
             {doneList > 0
@@ -57,19 +48,21 @@ export default function Today({ setUser }) {
           </PageSubtitle>
         </div>
         <div>
-          {todayHabits.length > 0
-            ? todayHabits.map((h) => (
-                <TodayHabitCard
-                  key={h.id}
-                  id={h.id}
-                  name={h.name}
-                  done={h.done}
-                  currentSequence={h.currentSequence}
-                  highestSequence={h.highestSequence}
-                  updateHabits={updateHabits}
-                />
-              ))
-            : "carregando"}
+          {todayHabits.length > 0 ? (
+            todayHabits.map((h) => (
+              <TodayHabitCard
+                key={h.id}
+                id={h.id}
+                name={h.name}
+                done={h.done}
+                currentSequence={h.currentSequence}
+                highestSequence={h.highestSequence}
+                updateHabits={updateHabits}
+              />
+            ))
+          ) : (
+            <TailSpin color={light.spinner} />
+          )}
         </div>
       </PageContainer>
       <Navbar />

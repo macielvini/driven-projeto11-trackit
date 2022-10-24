@@ -87,6 +87,10 @@ export const PageTitle = styled.p`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  & span::first-letter {
+    text-transform: capitalize;
+  }
 `;
 
 export const PageContainer = styled.div`

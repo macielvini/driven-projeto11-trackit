@@ -1,6 +1,7 @@
 export const light = {
   background: "#ffffff",
   header: { background: "#126ba5", text: "#fff" },
+  spinner: "#126BA5",
 
   text: {
     mainHeading: "#126BA5",
