@@ -12,17 +12,16 @@ export const Context = createContext();
 export default function App() {
   const [user, setUser] = useState({
     id: 0,
-    name: "",
-    image: "",
-    email: "",
-    password: "",
-    token: "",
+    name: undefined,
+    image: localStorage.getItem("image"),
+    email: undefined,
+    password: undefined,
+    // token: localStorage.getItem("token"),
     doneToday: 0,
   });
 
-  localStorage.setItem("token", user.token);
+  // localStorage.setItem("token", user.token);
   localStorage.setItem("image", user.image);
-  localStorage.setItem("user", user);
 
   return (
     <>

@@ -3,10 +3,11 @@ import axios from "axios";
 const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
 
 const api = axios.create({ baseURL: BASE_URL });
+const TOKEN = localStorage.getItem("token");
 
 export const HEADERS = {
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
+    Authorization: `Bearer ${TOKEN}`,
   },
 };
 

@@ -9,7 +9,7 @@ import {
   LogoWrapper,
   StyledLink,
 } from "../../constants/styledComponents";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../../constants/api";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -19,11 +19,10 @@ export default function Login({ setUser }) {
   const [form, setForm] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
 
-  function login(e) {
+  function formLogin(e) {
     e.preventDefault();
     setIsLoading(true);
-
-    loginUser({ ...form })
+    loginUser(form)
       .then((res) => {
         setUser({
           id: res.data.id,
@@ -31,21 +30,31 @@ export default function Login({ setUser }) {
           image: res.data.image,
           email: res.data.email,
           password: res.data.password,
-          token: res.data.token,
-          doneToday: 0,
         });
+
+        localStorage.setItem("token", res.data.token);
 
         navigate("/today");
       })
+
       .catch((err) => {
         console.log(err.response.data.message);
         setIsLoading(false);
       });
   }
 
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+  }, []);
+
   function formHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
+
+  useEffect(() => {
+    // console.log(localStorage.getItem("token"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -55,7 +64,7 @@ export default function Login({ setUser }) {
           <MainHeading>TrackIt</MainHeading>
         </LogoWrapper>
 
-        <Form onSubmit={login}>
+        <Form onSubmit={formLogin}>
           <StyledInput
             type="text"
             placeholder="email"

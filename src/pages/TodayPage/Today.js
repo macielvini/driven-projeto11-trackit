@@ -8,8 +8,6 @@ import { getTodayHabits } from "../../constants/api";
 import { Context } from "../../App";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
-import { TailSpin } from "react-loader-spinner";
-import { light } from "../../constants/theme";
 
 export default function Today({ setUser }) {
   const user = useContext(Context);
@@ -48,21 +46,19 @@ export default function Today({ setUser }) {
           </PageSubtitle>
         </div>
         <div>
-          {todayHabits.length > 0 ? (
-            todayHabits.map((h) => (
-              <TodayHabitCard
-                key={h.id}
-                id={h.id}
-                name={h.name}
-                done={h.done}
-                currentSequence={h.currentSequence}
-                highestSequence={h.highestSequence}
-                updateHabits={updateHabits}
-              />
-            ))
-          ) : (
-            <TailSpin color={light.spinner} />
-          )}
+          {todayHabits.length > 0
+            ? todayHabits.map((h) => (
+                <TodayHabitCard
+                  key={h.id}
+                  id={h.id}
+                  name={h.name}
+                  done={h.done}
+                  currentSequence={h.currentSequence}
+                  highestSequence={h.highestSequence}
+                  updateHabits={updateHabits}
+                />
+              ))
+            : "Nenhum hábito hoje"}
         </div>
       </PageContainer>
       <Navbar />
