@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import check from "../assets/images/check.svg";
 import { postCheckHabit, postUncheckHabit } from "../constants/api";
-import { UserContext } from "../context/UserContext";
 
 export default function TodayHabitCard({
   id,
@@ -10,27 +9,28 @@ export default function TodayHabitCard({
   done,
   currentSequence,
   highestSequence,
-  updateHabits,
+  amountHabitFinished,
+  setAmountHabitFinished,
 }) {
   const [isDone, setIsDone] = useState(done);
-  const { setUser, user } = useContext(UserContext);
 
   function checkHabit() {
     setIsDone(!isDone);
     let promise;
+    let newAmount = amountHabitFinished;
     if (isDone) {
       promise = postUncheckHabit(id);
+      newAmount -= 1;
     } else {
       promise = postCheckHabit(id);
+      newAmount += 1;
     }
-    promise
-      .then(() => {
-        updateHabits();
-      })
-      .catch((err) => {
-        setIsDone(isDone);
-        console.log(err.response.data);
-      });
+    setAmountHabitFinished(newAmount);
+    promise.catch((err) => {
+      setAmountHabitFinished(amountHabitFinished);
+      setIsDone(isDone);
+      console.log(err.response.data);
+    });
   }
 
   return (

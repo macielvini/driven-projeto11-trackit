@@ -14,6 +14,7 @@ import { UserContext } from "../../context/UserContext";
 
 export default function Today() {
   const { user, setUser } = useContext(UserContext);
+  const [amountHabitFinished, setAmountHabitFinished] = useState(0);
 
   const [todayHabits, setTodayHabits] = useState([]);
   const doneList = todayHabits.filter((h) => h.done).length;
@@ -22,15 +23,21 @@ export default function Today() {
     getTodayHabits()
       .then((res) => {
         setTodayHabits(res.data);
+        const habitFinished = res.data.filter((habit) => habit.done);
+        setAmountHabitFinished(habitFinished.length);
       })
       .catch((err) => console.log(err.response.data));
   }
 
   useEffect(() => {
     updateHabits();
-    setUser({ ...user, doneToday: doneList / todayHabits.length });
+    setUser({ ...user, doneToday: amountHabitFinished / todayHabits.length });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [doneList]);
+  useEffect(() => {
+    setUser({ ...user, doneToday: amountHabitFinished / todayHabits.length });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amountHabitFinished]);
 
   return (
     <>
@@ -56,6 +63,8 @@ export default function Today() {
                   id={h.id}
                   name={h.name}
                   done={h.done}
+                  setAmountHabitFinished={setAmountHabitFinished}
+                  amountHabitFinished={amountHabitFinished}
                   currentSequence={h.currentSequence}
                   highestSequence={h.highestSequence}
                   updateHabits={updateHabits}
