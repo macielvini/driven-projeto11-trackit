@@ -1,16 +1,19 @@
 import styled from "styled-components";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
-import { PageContainer, PageTitle } from "../../constants/styledComponents";
-import TodayHabitCard from "../../components/TodayHabitCard";
 import React, { useContext, useEffect, useState } from "react";
-import { getTodayHabits } from "../../constants/api";
-import { Context } from "../../App";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 
-export default function Today({ setUser }) {
-  const user = useContext(Context);
+import Header from "../../components/Header";
+import Navbar from "../../components/Navbar";
+import TodayHabitCard from "../../components/TodayHabitCard";
+
+import { PageContainer, PageTitle } from "../../constants/styledComponents";
+import { getTodayHabits } from "../../constants/api";
+
+import { UserContext } from "../../context/UserContext";
+
+export default function Today() {
+  const { user, setUser } = useContext(UserContext);
 
   const [todayHabits, setTodayHabits] = useState([]);
   const doneList = todayHabits.filter((h) => h.done).length;

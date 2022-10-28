@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import check from "../assets/images/check.svg";
 import { postCheckHabit, postUncheckHabit } from "../constants/api";
+import { UserContext } from "../context/UserContext";
 
 export default function TodayHabitCard({
   id,
@@ -12,25 +13,24 @@ export default function TodayHabitCard({
   updateHabits,
 }) {
   const [isDone, setIsDone] = useState(done);
+  const { setUser, user } = useContext(UserContext);
 
   function checkHabit() {
+    setIsDone(!isDone);
+    let promise;
     if (isDone) {
-      setIsDone(false);
-      postUncheckHabit(id)
-        .then(() => updateHabits())
-        .catch((err) => {
-          setIsDone(true);
-          console.log(err.response.data);
-        });
+      promise = postUncheckHabit(id);
     } else {
-      setIsDone(true);
-      postCheckHabit(id)
-        .then(() => updateHabits())
-        .catch((err) => {
-          setIsDone(false);
-          console.log(err.response.data);
-        });
+      promise = postCheckHabit(id);
     }
+    promise
+      .then(() => {
+        updateHabits();
+      })
+      .catch((err) => {
+        setIsDone(isDone);
+        console.log(err.response.data);
+      });
   }
 
   return (

@@ -1,5 +1,8 @@
+import { useContext, useEffect, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import logo from "../../assets/images/logo.svg";
 import { light } from "../../constants/theme";
 import {
@@ -9,13 +12,12 @@ import {
   LogoWrapper,
   StyledLink,
 } from "../../constants/styledComponents";
-import { useEffect, useState } from "react";
 import { loginUser } from "../../constants/api";
-import { ThreeDots } from "react-loader-spinner";
+import { UserContext } from "../../context/UserContext";
 
-export default function Login({ setUser }) {
+export default function Login() {
   const navigate = useNavigate();
-
+  const { setUser } = useContext(UserContext);
   const [form, setForm] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,37 +26,27 @@ export default function Login({ setUser }) {
     setIsLoading(true);
     loginUser(form)
       .then((res) => {
+        console.log(res.data);
         setUser({
-          id: res.data.id,
-          name: res.data.name,
-          image: res.data.image,
-          email: res.data.email,
-          password: res.data.password,
+          ...res.data,
         });
 
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("image", res.data.image);
 
         navigate("/today");
       })
 
       .catch((err) => {
-        console.log(err.response.data.message);
+        console.log(err);
+        console.log(err?.response.data.mesage);
         setIsLoading(false);
       });
   }
 
-  useEffect(() => {
-    console.log(localStorage.getItem("token"));
-  }, []);
-
   function formHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-
-  useEffect(() => {
-    // console.log(localStorage.getItem("token"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
