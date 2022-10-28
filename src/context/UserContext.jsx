@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const UserContext = createContext();
 
@@ -11,15 +12,16 @@ export function UserContextProvider({ children }) {
     doneToday: 0,
     image: undefined,
     token: undefined,
-    // image: localStorage.getItem("image"),
-    // token: localStorage.getItem("token"),
   });
+  const [userInfo, setUserInfo] = useLocalStorage("userInfo");
 
   return (
     <UserContext.Provider
       value={{
         user,
         setUser,
+        userInfo,
+        setUserInfo,
       }}
     >
       {children}

@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { light } from "../constants/theme";
+import { UserContext } from "../context/UserContext";
 
 export default function Header() {
-  const image = localStorage.getItem("image");
+  const { userInfo } = useContext(UserContext);
 
   return (
     <>
@@ -11,7 +13,7 @@ export default function Header() {
         <StyledHeader>
           <h1>TrackIt</h1>
           <ImgContainer>
-            <img src={image} alt="" />
+            <img src={userInfo.image} alt="" />
           </ImgContainer>
         </StyledHeader>
       </Link>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -12,12 +12,12 @@ import {
   LogoWrapper,
   StyledLink,
 } from "../../constants/styledComponents";
-import { loginUser } from "../../constants/api";
+import { api, loginUser } from "../../constants/api";
 import { UserContext } from "../../context/UserContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { setUser, setUserInfo } = useContext(UserContext);
   const [form, setForm] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,20 +26,19 @@ export default function Login() {
     setIsLoading(true);
     loginUser(form)
       .then((res) => {
-        console.log(res.data);
         setUser({
           ...res.data,
         });
 
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("image", res.data.image);
+        setUserInfo(res.data);
+        api.defaults.headers["Authorization"] = `Bearer ${res.data.token}`;
 
         navigate("/today");
       })
 
       .catch((err) => {
         console.log(err);
-        console.log(err?.response.data.mesage);
+        console.log(err?.response.data.message);
         setIsLoading(false);
       });
   }
