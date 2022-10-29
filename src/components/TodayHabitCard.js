@@ -9,28 +9,28 @@ export default function TodayHabitCard({
   done,
   currentSequence,
   highestSequence,
-  updateHabits,
+  amountHabitFinished,
+  setAmountHabitFinished,
 }) {
   const [isDone, setIsDone] = useState(done);
 
   function checkHabit() {
+    setIsDone(!isDone);
+    let promise;
+    let newAmount = amountHabitFinished;
     if (isDone) {
-      setIsDone(false);
-      postUncheckHabit(id)
-        .then(() => updateHabits())
-        .catch((err) => {
-          setIsDone(true);
-          console.log(err.response.data);
-        });
+      promise = postUncheckHabit(id);
+      newAmount -= 1;
     } else {
-      setIsDone(true);
-      postCheckHabit(id)
-        .then(() => updateHabits())
-        .catch((err) => {
-          setIsDone(false);
-          console.log(err.response.data);
-        });
+      promise = postCheckHabit(id);
+      newAmount += 1;
     }
+    setAmountHabitFinished(newAmount);
+    promise.catch((err) => {
+      setAmountHabitFinished(amountHabitFinished);
+      setIsDone(isDone);
+      console.log(err.response.data);
+    });
   }
 
   return (

@@ -5,10 +5,10 @@ import { light } from "../constants/theme";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useContext } from "react";
-import { Context } from "../App";
+import { UserContext } from "../context/UserContext";
 
 export default function Navbar() {
-  const user = useContext(Context);
+  const { user } = useContext(UserContext);
 
   return (
     <>
